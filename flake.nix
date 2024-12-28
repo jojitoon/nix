@@ -6,9 +6,12 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, ghostty }:
   let
     configuration = { pkgs, config, ... }: {
 
@@ -20,6 +23,8 @@
           pkgs.vim
           pkgs.mkalias
           pkgs.obsidian
+          pkgs.btop
+          ghostty.packages.x86_64-linux.default
         ];
 
       homebrew = {
@@ -27,12 +32,14 @@
         brews = [
           "mas"
         ];
-        # casks = [
-        # ];
-        masApps = {
-          "Yoink" = 457622435;
-        };
+        casks = [
+          "wezterm"
+        ];
+        # masApps = {
+        # };
         # onActivation.cleanup = "zap";
+        onActivation.autoUpdate = true;
+        onActivation.upgrade = true;
       };
       # Necessary for using flakes on this system.
       nix.settings.experimental-features = "nix-command flakes";
