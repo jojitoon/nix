@@ -34,6 +34,7 @@
         ];
         casks = [
           "wezterm"
+          # "ghostty"
         ];
         # masApps = {
         # };
